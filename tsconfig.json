@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+     "module": "NodeNext",
+     "moduleResolution": "NodeNext",
+        "target": "es2020",
+        "sourceMap": true,
+        "strict": true,
+        "lib": ["esnext"],
+        "outDir": "dist",
+        "baseUrl": "src",
+        "esModuleInterop": true,
+        "paths": {
+            "@Vite/*": ["*"]
+        }
+    },
+    "include": ["src/**/*"],
+  }
