@@ -1,19 +1,14 @@
-const http = require('http');
-const app = require('./app');
-const {initializeData} = require('./models/planets.models');
+import app from './app.js';
 
-const PORT = process.env.PORT || 8000;
+import http from 'http';
+
+// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8000;
 
 const server = http.createServer(app);
 
-const gate = "kkk";
-
-
-
-async function startServer (){
-    const res = await initializeData();
-    console.log(res);
-    server.listen(PORT, ()=> console.log(`running on port : ${PORT}`));
+function startServer (): void {
+  server.listen(PORT, () => { console.log(`running on port : ${PORT}`); });
 }
 
 startServer();
