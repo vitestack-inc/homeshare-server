@@ -1,14 +1,15 @@
 import app from './app.js';
-
+import 'dotenv/config';
 import http from 'http';
+import connectDB from './connectDB.js';
 
-// eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8000;
+const PORT = process.env.PORT ?? 8000;
 
 const server = http.createServer(app);
 
-function startServer (): void {
+async function startServer (): Promise<void> {
+  await connectDB();
   server.listen(PORT, () => { console.log(`running on port : ${PORT}`); });
 }
 
-startServer();
+await startServer();
