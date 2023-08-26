@@ -1,9 +1,12 @@
 import express from 'express';
 
-import { getAllUsers } from './users.controller.js';
+import { httpGetAllUsers, httpCreateUser } from './users.controller.js';
 
 const router = express.Router();
 
-router.get('/', getAllUsers);
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
+router.get('/', httpGetAllUsers);
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
+router.post('/', httpCreateUser);
 
 export default router;
