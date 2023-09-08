@@ -1,27 +1,20 @@
 import UserModel from './users.schema.js';
+import { type Document } from 'mongoose';
 
-export async function getAllUsers (): Promise<Array<typeof UserModel> | Error> {
-  console.log('getAllUsers calling ');
-  try {
-    return await UserModel.find({});
-  } catch (error) {
-    console.log(error);
-    throw new Error('Error while getting all users');
-  }
+export async function getAllUsers (): Promise<Document[]> {
+  return await UserModel.find({});
 }
 
-export async function createUser (user: typeof UserModel): Promise< string | Error> {
+export async function getUser (id: string): Promise<Document | null> {
+  return await UserModel.findById(id);
+}
+
+export async function createUser (user: typeof UserModel): Promise<Document> {
   const userData = {
     ...user,
     createdAt: new Date(),
     updatedAt: new Date()
 
   };
-  try {
-    await UserModel.create(userData);
-    return 'User created successfully';
-  } catch (error) {
-    console.log(error);
-    throw new Error('Error while creating user');
-  }
+  return await UserModel.create(userData);
 }

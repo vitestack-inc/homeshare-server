@@ -13,7 +13,7 @@ const UserSchema = new Schema({
     drinker: { type: String, required: true },
     diet: { type: String, required: true },
     budget: { type: Object, required: true },
-    pet: { type: String, required: true },
+    pet: { type: Boolean, required: true },
     hobbies: { type: [{ type: String }], required: true },
     gender: { type: String, required: true }
   },
