@@ -13,3 +13,15 @@ async function startServer (): Promise<void> {
 }
 
 await startServer();
+
+process.on('bad auth', (err: unknown) => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+
+  if (err instanceof Error) {
+    console.log(err.name, err.message);
+  }
+
+  server.close(() => {
+    process.exit(1);
+  });
+});

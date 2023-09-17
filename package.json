@@ -13,10 +13,13 @@
     "lint:fix": "eslint --fix --ext .js,.ts src"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.3",
     "@types/morgan": "^1.9.4",
     "@types/node": "^20.4.9",
+    "@types/validator": "^13.11.1",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^37.0.0",
@@ -29,12 +32,15 @@
     "typescript": "*"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^5.8.1",
     "mongoose": "^7.4.4",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "validator": "^13.11.0"
   }
 }

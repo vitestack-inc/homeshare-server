@@ -2,6 +2,10 @@ class AppError extends Error {
   statusCode: number;
   status: string;
   isOperational: boolean;
+  path?: string;
+  value?: string;
+  errmsg?: string;
+  errors?: Record<string, any>;
 
   constructor (message: string, statusCode: number) {
     super(message);
