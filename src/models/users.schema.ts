@@ -54,6 +54,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide your password'],
     max: 100,
+    select: false,
     validate: {
       validator: function (value: string) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -154,5 +155,9 @@ UserSchema.pre<IUser>('save', async function (next) {
   this.confirmPassword = undefined;
   next();
 });
+
+UserSchema.methods.correctPassword = async function (candidatePassword: string, userPassword: string): Promise<boolean> {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 export default mongoose.model('user', UserSchema);
