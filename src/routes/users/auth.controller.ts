@@ -84,3 +84,31 @@ const getSignedToken = function (id: string): string {
     process.env.JWT_SECRET!,
     { expiresIn: process.env.JWT_EXPIRES_IN });
 };
+
+export const httpProtect = catchAsync(async function (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> {
+  // 1) Get token and check if it's there
+  let token = '';
+  if (req.headers?.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if (token === '') {
+    next(new AppError('You are not logged in! Please log in to get access.', 401));
+    return;
+  }
+
+  // 2) Verification token
+  const decoded = jwt.verify(token, process.env.JWT_SECRET ?? '') as { id: string, iat: number, exp: number };
+  // 3) Check if user still exists
+  const currentUser = await UserModel.findById(decoded.id);
+  if (!currentUser) {
+    next(new AppError('The user belonging to this token does no longer exist.', 401));
+    return;
+  }
+
+  // 4) Check if user changed password after the token was issued
+  if (currentUser?.changedPasswordAfter(decoded.iat)) {
+    next(new AppError('User recently changed password! Please log in again.', 401)); return;
+  }
+  next();
+});

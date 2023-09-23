@@ -26,6 +26,8 @@ interface IUser extends Document {
   percentageProfileCompletion: number
   createdAt: Date
   updatedAt: Date
+  changedPasswordAfter: (JWTTimestamp: number) => boolean
+  correctPassword: (candidatePassword: string, userPassword: string) => Promise<boolean>
 }
 
 const UserSchema = new mongoose.Schema({
@@ -160,4 +162,14 @@ UserSchema.methods.correctPassword = async function (candidatePassword: string, 
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-export default mongoose.model('user', UserSchema);
+UserSchema.methods.changedPasswordAfter = function (JWTTimestamp: number): boolean {
+  if (this.updatedAt) {
+    const changedTimestamp = Number(this.updatedAt.getTime() / 1000);
+
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  // False means NOT changed
+  return false;
+};
+export default mongoose.model<IUser>('user', UserSchema);

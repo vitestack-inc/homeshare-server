@@ -47,5 +47,6 @@ module.exports = {
     '@typescript-eslint/semi': ['off', 'always'],
     '@typescript-eslint/no-var-requires': 'off',
     "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/strict-boolean-expressions": "off"
   },
 };
