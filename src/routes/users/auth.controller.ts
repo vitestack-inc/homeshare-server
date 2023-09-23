@@ -5,7 +5,6 @@ import { createUser } from '../../models/users.model.js';
 import UserModel from '../../models/users.schema.js';
 import catchAsync from '../../utils/catchAsync.js';
 import AppError from '../../utils/appError.js';
-import bcrypt from 'bcrypt';
 
 interface UserSignupDocument extends Document {
 
@@ -59,7 +58,7 @@ export const httpUserLogin = catchAsync(
       return;
     }
     // check if inputed password is correct
-    const correct = await correctPassword(password, user.password ?? '');
+    const correct = await user.correctPassword(password, user.password ?? '');
 
     if (correct) {
       // jwt method. create a signed token
@@ -75,9 +74,6 @@ export const httpUserLogin = catchAsync(
   }
 );
 
-const correctPassword = async function (candidatePassword: string, userPassword: string): Promise<boolean> {
-  return await bcrypt.compare(candidatePassword, userPassword);
-};
 const getSignedToken = function (id: string): string {
   return jwt.sign({ id },
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
