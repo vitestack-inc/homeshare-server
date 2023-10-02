@@ -13,6 +13,6 @@ router.get('/', httpProtect, httpGetAllUsers);
 
 router.get('/:id', httpGetUserById);
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-router.post('/', httpCreateUser);
+router.post('/', httpProtect, httpCreateUser);
 
 export default router;
