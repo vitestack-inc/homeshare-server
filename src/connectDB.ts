@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
-const URI = process.env.MONGO_URI ?? '';
+const URI = process.env.MONGO_URI ?? null;
 
 const connectDB = async (): Promise<void> => {
   try {
     if (URI === null || URI === undefined) {
-      throw new Error('DB connection string is not defined in this environment.');
+      throw new Error('DB connection string is not defined in this environment or ENV file is missen.');
     }
     const conn = await mongoose.connect(URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
